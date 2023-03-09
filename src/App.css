@@ -1,0 +1,38 @@
+.App {
+  text-align: center;
+  height: 90vmin;
+  padding: 10px;
+}
+
+.viewer {
+  display: block;
+  width: 100%;
+  height: 500px;
+  background: linear-gradient(
+    0deg,
+    rgba(161, 161, 161, 1) 0%,
+    rgba(238, 238, 238, 1) 100%
+  );
+}
+
+.--hidden {
+  display: none;
+  position: unset;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  font-size: 1.3rem;
+  list-style-type: none;
+  margin: 0;
+  padding: 1rem 0;
+  background-color: #eee;
+}
+
+nav > * {
+  margin: 0 1rem;
+  text-decoration: none;
+}
