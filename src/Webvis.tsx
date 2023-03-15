@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useExternalScripts from './hooks/useExternalScripts';
 import WebvisViewer from './WebvisViewer';
 
@@ -6,25 +6,6 @@ export interface WebvisProps {
   webvisJS: string;
   onWebvisReady?: (ctx: webvis.ContextAPI) => void;
   onWebvisError?: (errorMessage: string) => void;
-}
-
-async function waitForInitWebvis(
-  ctx: Promise<webvis.ContextAPI | undefined>
-): Promise<webvis.ContextAPI> {
-  const context = await ctx;
-  if (!context) {
-    throw new Error('ContextAPI is undefined');
-  }
-
-  await context.waitFor('init');
-  const listenerID = context.registerListener(
-    [webvis.EventType.VIEWER_CREATED],
-    () => {
-      context.unregisterListener(listenerID);
-    }
-  );
-
-  return context;
 }
 
 export default function Webvis(props: WebvisProps): JSX.Element {
@@ -38,12 +19,17 @@ export default function Webvis(props: WebvisProps): JSX.Element {
 
   useEffect(() => {
     if (scriptLoaded) {
-      const ctx = webvis.requestContext('myContext');
-      waitForInitWebvis(ctx).then((ctx: webvis.ContextAPI) => {
-        if (props.onWebvisReady) {
-          props.onWebvisReady(ctx);
-        }
-      });
+      Promise.resolve(webvis.getContext('default_context'))
+        .then((ctx: webvis.ContextAPI | undefined) => {
+          if (props.onWebvisReady && ctx) {
+            props.onWebvisReady(ctx);
+          }
+        })
+        .catch((error) => {
+          if (props.onWebvisError) {
+            props.onWebvisError(error.message);
+          }
+        });
     }
   }, [scriptLoaded, props]);
 
