@@ -5,18 +5,14 @@ import About from './pages/About';
 
 import Webvis from './Webvis';
 import './App.css';
-import { setGlobalWebvisContext } from './WebvisContext';
 
 // handleWebvisReady: it handles the actions after loading webvis
 const handleWebvisReady = async (ctx: webvis.ContextAPI) => {
-  // setting the context as aglobal one to use it
-  setGlobalWebvisContext(ctx);
   console.debug('Initialize webvis setup...');
   // add new cube model to the scene
   let nodeId = ctx.add('urn:x-i3d:shape:box');
   // enable the model to be visible on the scene
-  await ctx.setProperty(nodeId, webvis.Property.ENABLED, true);
-  console.debug('added cube');
+  await ctx.setProperty(nodeId, 'enabled', true);
 };
 
 function App() {
@@ -30,10 +26,12 @@ function App() {
         <Link to='/'>Home</Link>
         <Link to='/about'>About</Link>
       </nav>
+
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/about' element={<About />} />
       </Routes>
+
       {/* hide webvis instance when user leaves main page */}
       <div className={pathname === '/' ? 'viewer' : 'viewer --hidden'}>
         <Webvis
