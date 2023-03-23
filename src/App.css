@@ -36,3 +36,6 @@ nav > * {
   margin: 0 1rem;
   text-decoration: none;
 }
+button {
+  padding: 1rem;
+}
