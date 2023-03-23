@@ -8,24 +8,9 @@ export interface WebvisProps {
   onWebvisError?: (errorMessage: string) => void;
 }
 
-function waitForInitWebvis(ctx: webvis.ContextAPI): Promise<webvis.ContextAPI> {
-  const promise = new Promise<webvis.ContextAPI>((resolve) => {
-    ctx.waitFor('init').then(() => {
-      const listenerID = ctx.registerListener(
-        [webvis.EventType.VIEWER_CREATED],
-        () => {
-          ctx.unregisterListener(listenerID);
-          resolve(ctx);
-        }
-      );
-    });
-  });
-
-  return promise;
-}
-
 export default function Webvis(props: WebvisProps): JSX.Element {
   const [scriptLoaded, setScriptLoaded] = useState<boolean>(false);
+  const [contextReady, setContextReady] = useState<boolean>(false);
 
   useExternalScripts(
     props.webvisJS,
@@ -34,19 +19,20 @@ export default function Webvis(props: WebvisProps): JSX.Element {
   );
 
   useEffect(() => {
-    if (scriptLoaded) {
-      const ctx = webvis.getContext('default_context');
-      if (ctx !== undefined) {
-        waitForInitWebvis(ctx).then((ctx: webvis.ContextAPI) => {
-          if (props.onWebvisReady) {
-            props.onWebvisReady(ctx);
-          }
-        });
+    (async () => {
+      if (scriptLoaded) {
+        const ctx =
+          webvis.getContext('myContext') ??
+          (await webvis.requestContext('myContext'));
+        setContextReady(true);
+        if (props.onWebvisReady && ctx !== undefined) {
+          props.onWebvisReady(ctx);
+        }
       }
-    }
-  }, [scriptLoaded, props]);
+    })();
+  }, [scriptLoaded, props.onWebvisReady]);
 
-  if (scriptLoaded) {
+  if (scriptLoaded && contextReady) {
     return <WebvisViewer />;
   } else {
     return <div></div>;
