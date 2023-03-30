@@ -34,7 +34,7 @@ const addCube = async () => {
 function App() {
   const { pathname } = useLocation();
   // getting the hub url from the env variables
-  const hub_url = process.env.REACT_APP_URl_HUB;
+  const hub_url = process.env.REACT_APP_URL_HUB;
 
   return (
     <>
