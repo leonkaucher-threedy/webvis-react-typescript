@@ -1,4 +1,4 @@
-import React, { DOMAttributes } from 'react';
+import { DOMAttributes } from 'react';
 
 type CustomElement<T> = Partial<T & DOMAttributes<T> & { children: any }>;
 
@@ -10,6 +10,9 @@ declare global {
   }
 }
 
+/**
+ * Wrapper for the webVis viewer component.
+ */
 export default function WebvisViewer(): JSX.Element {
   return <webvis-viewer context='myContext'></webvis-viewer>;
 }
