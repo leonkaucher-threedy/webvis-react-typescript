@@ -5,36 +5,25 @@ import About from './pages/About';
 
 import Webvis from './Webvis';
 import './App.css';
+import AddModelButton from './AddModelButton';
+import { useState } from 'react';
 
-let myContext: webvis.ContextAPI;
-let isWebvisReady = false;
-
-// handleWebvisReady: it handles the actions after loading webvis
-const handleWebvisReady = async (ctx: webvis.ContextAPI) => {
-  if (!isWebvisReady) {
-    console.log('Initialize webvis setup...');
-    myContext = ctx;
-    isWebvisReady = true;
-    const btn = document.getElementById('addCubeBtn') as HTMLButtonElement;
-    btn.disabled = false;
-  }
-};
-
-const addCube = async () => {
-  // add new cube model to the scene
-  console.log('adding cube');
-
-  let nodeId = myContext.add('urn:x-i3d:shape:box');
-  // enable the model to be visible on the scene
-  await myContext.setProperty(nodeId, webvis.Property.ENABLED, true);
-  const btn = document.getElementById('addCubeBtn') as HTMLButtonElement;
-  btn.disabled = true;
-};
-
-function App() {
-  const { pathname } = useLocation();
-  // getting the hub url from the env variables
+function App(): JSX.Element {
   const hub_url = process.env.REACT_APP_URL_HUB;
+  const { pathname } = useLocation();
+  const [context, setContext] = useState<webvis.ContextAPI | undefined>(undefined);
+
+  const handleWebvisReady = (ctx: webvis.ContextAPI) => {
+    console.log('webvis context ready');
+    setContext(ctx);
+  };
+
+  let button: JSX.Element;
+  if (context) {
+    button = <AddModelButton label='Engine' modelURI='urn:x-i3d:examples:x3d:v8' context={context} />;
+  } else {
+    button = <div></div>;
+  }
 
   return (
     <>
@@ -55,9 +44,9 @@ function App() {
           webvisJS={hub_url ? hub_url : ''}
           onWebvisReady={handleWebvisReady}
         />
-        <button id='addCubeBtn' onClick={addCube}>
-          add cube
-        </button>
+
+        {button}
+
       </div>
     </>
   );
