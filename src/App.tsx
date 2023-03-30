@@ -46,7 +46,9 @@ function App(): JSX.Element {
           onWebvisReady={handleWebvisReady}
         />
 
-        {button}
+        <div className='overlayButton'>
+          {button}
+        </div>
 
       </div>
     </>

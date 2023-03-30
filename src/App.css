@@ -1,3 +1,31 @@
+:root
+{
+    --threedy-red: #FF5027;
+    --threedy-green: #00FFAC;
+    --threedy-blue: #5075F9;
+    --threedy-dark-blue: #091227;
+}
+
+html, body
+{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    
+}
+
+body {
+    font-family: "Montserrat", sans-serif;
+    background-image: url("../public/threedy-form.svg");
+    background-color: var(--threedy-dark-blue);
+    background-repeat: no-repeat;
+    background-position: right bottom;
+    background-size: auto 70%;
+    background-attachment: fixed;
+}
+
 .App {
   text-align: center;
   height: 90vmin;
@@ -5,14 +33,45 @@
 }
 
 .viewer {
-  display: block;
   width: 100%;
-  height: 500px;
-  background: linear-gradient(
-    0deg,
-    rgba(161, 161, 161, 1) 0%,
-    rgba(238, 238, 238, 1) 100%
-  );
+  height: 90%;
+  background-color: var(--threedy-dark-blue);
+}
+
+.overlayButton {
+  position: fixed;
+  z-index: 2;
+  top: 50%;
+  left: 32px;
+}
+
+button {
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 2px solid #AAAAAA;
+  font-size: 16px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+button:active {
+  background-color: rgba(255,255,255,0);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: auto;
+}
+
+.about {
+  margin-top: 64px;
+  margin-left: 128px;
+  margin-right: 128px;
 }
 
 .--hidden {
@@ -29,7 +88,7 @@ nav {
   list-style-type: none;
   margin: 0;
   padding: 1rem 0;
-  background-color: #eee;
+  background-color: rgba(161, 161, 161, 0.1);
 }
 
 nav > * {
@@ -38,4 +97,56 @@ nav > * {
 }
 button {
   padding: 1rem;
+}
+
+
+a,
+a:active,
+a:visited
+{
+    color: white;
+    text-decoration: none;
+}
+
+a:hover
+{
+    color: var(--threedy-green);
+}
+
+h1
+{
+    font-weight: 400;
+    font-size: 28px;
+    color: var(--threedy-green);
+}
+
+h3
+{
+    color: white;
+    font-weight: 300;
+    font-size: 22px;
+}
+
+p
+{
+  color: white;
+  font-size: 22px;
+}
+
+ul {
+    list-style: none;
+    padding: 0px;
+}
+
+ul li 
+{
+    color: white;
+    margin: 8px;
+    font-weight: 200;
+}
+
+ul li:before
+{
+    content: '\25b6\fe0e';
+    margin: 0 20px 0 30px;
 }
