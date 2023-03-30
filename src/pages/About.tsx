@@ -1,6 +1,7 @@
-function About() {
+
+
+function About(): JSX.Element {
   return (
-    <>
       <div>
         <h1>About this app</h1>
         <p>
@@ -10,7 +11,6 @@ function About() {
           hidden from the DOM based on the page route.
         </p>
       </div>
-    </>
   );
 }
 
