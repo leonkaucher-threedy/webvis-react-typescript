@@ -1,55 +1,83 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import useExternalScripts from './hooks/useExternalScripts';
 import WebvisViewer from './WebvisViewer';
 
 export interface WebvisProps {
-    /**
-     * The URL to the webvis JS library that is provided by your instant3Dhub installation.
-     * E.g.: https://hubdemo.threedy.io/repo/webvis/webvis.js
-     */
-    webvisJS: string;
+  /**
+   * The URL to the webvis JS library that is provided by your instant3Dhub installation.
+   * E.g.: https://hubdemo.threedy.io/repo/webvis/webvis.js
+   */
+  webvisJS: string;
 
-    /**
-     * Optional callback that is triggered as soon as webvis has been loaded.
-     * 
-     * @param ctx - The context to the initialized webVis.
-     */
-    onWebvisReady?: (ctx: webvis.ContextAPI) => void;
+  /**
+   * The name of the webvis context.
+   * If two webvis viewer have the same context, they also show the content.
+   */
+  contextName: string;
 
-    /**
-     * Optional callback if initializing webvis failed.
-     * 
-     * @param errorMessage - Message that describes why initializing webvis failed.
-     */
-    onWebvisError?: (errorMessage: string) => void;
+  /**
+   * Optional callback that is triggered as soon as webvis has been loaded.
+   * 
+   * @param ctx - The context to the initialized webVis.
+   */
+  onWebvisReady?: (ctx: webvis.ContextAPI) => void;
+
+  /**
+   * Optional callback if initializing webvis failed.
+   * 
+   * @param errorMessage - Message that describes why initializing webvis failed.
+   */
+  onWebvisError?: (errorMessage: string) => void;
 }
 
 /**
  * The central webvis react component that contains the webvis viewer component.
  */
 export default function Webvis(props: WebvisProps): JSX.Element {
-  const {onWebvisReady} = props;
-  const [scriptLoaded, setScriptLoaded] = useState<boolean>(false);
+  const { onWebvisReady, contextName, onWebvisError } = props;
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const [context, setContext] = useState<webvis.ContextAPI | undefined>(undefined);
+  const [viewer, setViewer] = useState<webvis.ViewerAPI | undefined>(undefined);
+  const [scriptLoaded, setScriptLoaded] = useState<boolean>(false);
 
+  // hook to load the webvis script
   useExternalScripts(props.webvisJS, () => setScriptLoaded(true), props.onWebvisError);
 
-  // hook to trigger webvis ready callback
+  // hook to create the webvis context
   useEffect(() => {
-    (async () => {
-      if (scriptLoaded && !context) {
-        const ctx: webvis.ContextAPI | undefined = webvis.getContext('myContext') ?? (await webvis.requestContext('myContext'));
+    if (!scriptLoaded) {
+      return;
+    }
+
+    console.log('Request webvis context...');
+
+    webvis.requestContext(contextName).then(ctx => {
+      if (ctx) {
         setContext(ctx);
-        if (onWebvisReady && ctx !== undefined) {
-          onWebvisReady(ctx);
+      } else {
+        console.error(`Failed to get webvis context ${contextName}`);
+
+        if (onWebvisError) {
+          onWebvisError(`Failed to get webvis context ${contextName}`);
         }
       }
-    })();
-  }, [scriptLoaded, onWebvisReady, setContext]);
+    });
+  }, [scriptLoaded, contextName]);
 
-  if (scriptLoaded && context) {
-    return <WebvisViewer />;
-  } else {
-    return <div></div>;
-  }
+  // hook to create webvis viewer
+  useEffect(() => {
+    if (!context || viewer) {
+      return;
+    }
+
+    console.log('Create webvis viewer...');
+
+    setViewer(context.createViewer("myFirstViewer", canvasRef.current as HTMLCanvasElement));
+
+    if(onWebvisReady) {
+      onWebvisReady(context);
+    }
+  }, [context, viewer, onWebvisReady]);
+
+  return <canvas style={{width: '100%', height: '100%'}} ref={canvasRef} />;
 }

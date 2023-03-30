@@ -42,6 +42,7 @@ function App(): JSX.Element {
       <div className={pathname === '/' ? 'viewer' : 'viewer --hidden'}>
         <Webvis
           webvisJS={hub_url ? hub_url : ''}
+          contextName="myContext"
           onWebvisReady={handleWebvisReady}
         />
 
