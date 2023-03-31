@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import useExternalScripts from './hooks/useExternalScripts';
-import WebvisViewer from './WebvisViewer';
 
 export interface WebvisProps {
   /**
