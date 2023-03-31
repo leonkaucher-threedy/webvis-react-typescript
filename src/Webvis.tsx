@@ -10,7 +10,8 @@ export interface WebvisProps {
 
   /**
    * The name of the webvis context.
-   * If two webvis viewer have the same context, they also show the content.
+   * If two webvis viewer have the same context, they also show the same content as the share a 
+   * common state.
    */
   contextName: string;
 
@@ -33,14 +34,14 @@ export interface WebvisProps {
  * The central webvis react component that contains the webvis viewer component.
  */
 export default function Webvis(props: WebvisProps): JSX.Element {
-  const { onWebvisReady, contextName, onWebvisError } = props;
+  const { webvisJS, contextName, onWebvisReady, onWebvisError } = props;
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [context, setContext] = useState<webvis.ContextAPI | undefined>(undefined);
   const [viewer, setViewer] = useState<webvis.ViewerAPI | undefined>(undefined);
   const [scriptLoaded, setScriptLoaded] = useState<boolean>(false);
 
   // hook to load the webvis script
-  useExternalScripts(props.webvisJS, () => setScriptLoaded(true), props.onWebvisError);
+  useExternalScripts(webvisJS, () => setScriptLoaded(true), onWebvisError);
 
   // hook to create the webvis context
   useEffect(() => {
