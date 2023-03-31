@@ -1,3 +1,4 @@
+# Example: webvis integration in react
 
 ## Description
 webvis-react-typescript is a simple application that shows how to integrate webvis into the modern framework React/Typescript.
@@ -5,14 +6,15 @@ webvis-react-typescript is a simple application that shows how to integrate webv
 ---
 ## Table of content
 ---
-- [Description](#description)
-- [Table of content](#table-of-content)
-- [How to use the example](#how-to-use-the-example)
-  - [Setup](#setup)
-  - [Technical details](#technical-details)
-    - [Configuration Variables](#configuration-variables)
-- [License](#license)
-- [How to report an issue.](#how-to-report-an-issue)
+- [Example: webvis integration in react](#example-webvis-integration-in-react)
+  - [Description](#description)
+  - [Table of content](#table-of-content)
+  - [How to use the example](#how-to-use-the-example)
+    - [Setup](#setup)
+    - [Technical details](#technical-details)
+      - [Configuration Variables](#configuration-variables)
+  - [License](#license)
+  - [How to report an issue.](#how-to-report-an-issue)
 
 
 ---

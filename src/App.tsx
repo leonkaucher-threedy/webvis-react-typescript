@@ -8,7 +8,7 @@ import './App.css';
 import AddModelButton from './AddModelButton';
 import { useState } from 'react';
 
-function App(): JSX.Element {
+export default function App(): JSX.Element {
   const hub_url = process.env.REACT_APP_URL_HUB;
   const { pathname } = useLocation();
   const [context, setContext] = useState<webvis.ContextAPI | undefined>(undefined);
@@ -21,13 +21,6 @@ function App(): JSX.Element {
   const handleWebvisError = (error: string) => {
     alert(`Initializing webvis failed due to '${error}'`);
   };
-
-  let button: JSX.Element;
-  if (context) {
-    button = <AddModelButton label='Engine' modelURI='urn:x-i3d:examples:x3d:v8' context={context} />;
-  } else {
-    button = <div></div>;
-  }
 
   return (
     <>
@@ -52,12 +45,10 @@ function App(): JSX.Element {
         />
 
         <div className='overlay-button'>
-          {button}
+          {context? <AddModelButton label='Engine' modelURI='urn:x-i3d:examples:x3d:v8' context={context} /> : null}
         </div>
 
       </div>
     </>
   );
 }
-
-export default App;
