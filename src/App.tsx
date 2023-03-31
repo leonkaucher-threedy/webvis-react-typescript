@@ -18,6 +18,10 @@ function App(): JSX.Element {
     setContext(ctx);
   };
 
+  const handleWebvisError = (error: string) => {
+    alert(`Initializing webvis failed due to '${error}'`);
+  };
+
   let button: JSX.Element;
   if (context) {
     button = <AddModelButton label='Engine' modelURI='urn:x-i3d:examples:x3d:v8' context={context} />;
@@ -46,7 +50,7 @@ function App(): JSX.Element {
           onWebvisReady={handleWebvisReady}
         />
 
-        <div className='overlayButton'>
+        <div className='overlay-button'>
           {button}
         </div>
 

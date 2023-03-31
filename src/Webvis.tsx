@@ -44,7 +44,7 @@ export default function Webvis(props: WebvisProps): JSX.Element {
 
   // hook to create the webvis context
   useEffect(() => {
-    if (!scriptLoaded) {
+    if (!scriptLoaded || context) {
       return;
     }
 
@@ -61,7 +61,7 @@ export default function Webvis(props: WebvisProps): JSX.Element {
         }
       }
     });
-  }, [scriptLoaded, contextName]);
+  }, [scriptLoaded, context, contextName, onWebvisError]);
 
   // hook to create webvis viewer
   useEffect(() => {
