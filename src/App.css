@@ -38,7 +38,7 @@ body {
   background-color: var(--threedy-dark-blue);
 }
 
-.overlayButton {
+.overlay-button {
   position: fixed;
   z-index: 2;
   top: 50%;

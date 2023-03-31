@@ -48,6 +48,7 @@ function App(): JSX.Element {
           webvisJS={hub_url ? hub_url : ''}
           contextName="myContext"
           onWebvisReady={handleWebvisReady}
+          onWebvisError={handleWebvisError}
         />
 
         <div className='overlay-button'>
