@@ -1,13 +1,36 @@
+:root {
+	--threedy-red: #ff5027;
+	--threedy-green: #00ffac;
+	--threedy-blue: #5075f9;
+	--threedy-dark-blue: #091227;
+}
+
+html,
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	overflow-x: hidden;
+}
+
+body {
+	font-family: "Montserrat", sans-serif;
+	background-image: url("../public/threedy-form.svg");
+	background-color: var(--threedy-dark-blue);
+	background-repeat: no-repeat;
+	background-position: right bottom;
+	background-size: auto 70%;
+	background-attachment: fixed;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+	font-family:
+		source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
 }

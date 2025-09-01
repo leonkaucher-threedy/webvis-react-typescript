@@ -1,152 +1,202 @@
-:root
-{
-    --threedy-red: #FF5027;
-    --threedy-green: #00FFAC;
-    --threedy-blue: #5075F9;
-    --threedy-dark-blue: #091227;
-}
-
-html, body
-{
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-    
-}
-
-body {
-    font-family: "Montserrat", sans-serif;
-    background-image: url("../public/threedy-form.svg");
-    background-color: var(--threedy-dark-blue);
-    background-repeat: no-repeat;
-    background-position: right bottom;
-    background-size: auto 70%;
-    background-attachment: fixed;
-}
-
-.App {
-  text-align: center;
-  height: 90vmin;
-  padding: 10px;
+.app {
+	text-align: center;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	padding: 0.625rem;
 }
 
 .viewer {
-  width: 100%;
-  height: 90%;
-  background-color: var(--threedy-dark-blue);
+	width: 100%;
+	flex: 1 1 auto;
+	display: grid;
+	grid-template-rows: 1fr;
+	grid-template-columns: 1fr;
+	align-items: stretch;
+	justify-items: stretch;
+	background-color: var(--threedy-dark-blue);
 }
 
 .overlay-button {
-  position: fixed;
-  z-index: 2;
-  top: 50%;
-  left: 32px;
+	/* Overlay centered vertically within .viewer without using top/margins */
+	grid-area: 1 / 1;
+	align-self: center;
+	justify-self: start;
+	z-index: 2;
+	padding-inline-start: 2rem;
+	pointer-events: auto;
 }
 
 button {
-  border-radius: 8px;
-  background-color: rgba(255, 255, 255, 0.1);
-  color: white;
-  border: 2px solid #AAAAAA;
-  font-size: 16px;
-  transition-duration: 0.4s;
-  cursor: pointer;
+	border-radius: 0.5rem;
+	background-color: rgba(255, 255, 255, 0.1);
+	color: white;
+	border: 2px solid #aaaaaa;
+	font-size: 1rem;
+	transition-duration: 0.4s;
+	cursor: pointer;
 }
 
 button:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+	background-color: rgba(255, 255, 255, 0.2);
 }
 
 button:active {
-  background-color: rgba(255,255,255,0);
+	background-color: rgba(255, 255, 255, 0);
 }
 
 button:disabled {
-  opacity: 0.6;
-  cursor: auto;
+	opacity: 0.6;
+	cursor: not-allowed;
 }
 
 .about {
-  margin-top: 64px;
-  margin-left: 128px;
-  margin-right: 128px;
+	margin: 1rem 2rem;
 }
 
-.--hidden {
-  display: none;
-  position: unset;
+.about-page {
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 1024px;
 }
-
-nav {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: row;
-  font-size: 1.3rem;
-  list-style-type: none;
-  margin: 0;
-  padding: 1rem 0;
-  background-color: rgba(161, 161, 161, 0.1);
-}
-
-nav > * {
-  margin: 0 1rem;
-  text-decoration: none;
-}
-button {
-  padding: 1rem;
-}
-
 
 a,
 a:active,
-a:visited
-{
-    color: white;
-    text-decoration: none;
+a:visited {
+	color: white;
+	text-decoration: none;
 }
 
-a:hover
-{
-    color: var(--threedy-green);
+a:hover {
+	color: var(--threedy-green);
 }
 
-h1
-{
-    font-weight: 400;
-    font-size: 28px;
-    color: var(--threedy-green);
+.about-page a {
+	text-decoration: underline;
 }
 
-h3
-{
-    color: white;
-    font-weight: 300;
-    font-size: 22px;
+nav {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: row;
+	font-size: 1.3rem;
+	list-style-type: none;
+	margin: 0;
+	padding: 1rem 0;
+	background-color: rgba(161, 161, 161, 0.1);
 }
 
-p
-{
-  color: white;
-  font-size: 22px;
+nav > * {
+	margin: 0 1rem;
+	text-decoration: none;
+}
+button {
+	padding: 1rem;
 }
 
-ul {
-    list-style: none;
-    padding: 0px;
+/* Toggle (switch) styling for TopologyToggle */
+.toggle {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.625rem;
+	padding: 0.625rem 0.75rem; /* override global */
+	border-radius: 999px; /* pill */
+	background-color: rgba(255, 255, 255, 0.08); /* similar to button */
+	border: 2px solid #aaaaaa; /* keep congruent border */
+	outline: none;
 }
 
-ul li 
-{
-    color: white;
-    margin: 8px;
-    font-weight: 200;
+.toggle:hover {
+	background-color: rgba(255, 255, 255, 0.18);
 }
 
-ul li:before
-{
-    content: '\25b6\fe0e';
-    margin: 0 20px 0 30px;
+.toggle:active {
+	background-color: rgba(255, 255, 255, 0);
+}
+
+.toggle:focus-visible {
+	box-shadow: 0 0 0 3px rgba(80, 117, 249, 0.5); /* blue focus ring */
+}
+
+.toggle[disabled] {
+	opacity: 0.6;
+	cursor: not-allowed;
+}
+
+.toggle__text {
+	color: white;
+	font-size: 1rem;
+	user-select: none;
+}
+
+.toggle__track {
+	position: relative;
+	width: 2.875rem;
+	height: 1.625rem;
+	border-radius: 999px;
+	background-color: rgba(255, 255, 255, 0.15);
+	border: 1px solid #aaaaaa;
+	box-sizing: border-box;
+	transition:
+		background-color 0.25s ease,
+		border-color 0.25s ease;
+}
+
+.toggle__thumb {
+	position: absolute;
+	top: 0.1875rem;
+	left: 0.1875rem;
+	width: 1.25rem;
+	height: 1.25rem;
+	border-radius: 50%;
+	background: white;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+	transition: transform 0.25s ease;
+}
+
+/* ON state */
+.toggle.toggle--on .toggle__track {
+	background-color: var(--threedy-green);
+	border-color: var(--threedy-green);
+}
+
+.toggle.toggle--on .toggle__thumb {
+	transform: translateX(1.25rem);
+}
+
+h1 {
+	font-weight: 400;
+	font-size: 1.75rem;
+	color: var(--threedy-green);
+	margin: 2rem 0 0.5rem;
+}
+
+h2,
+h3 {
+	color: white;
+	font-weight: 300;
+	font-size: 1.375rem;
+}
+
+h2 {
+	margin: 4rem 0 0.375rem;
+}
+
+h3 {
+	margin: 3rem 0 0.375rem;
+}
+
+p {
+	color: white;
+	font-size: 1.375rem;
+	line-height: 1.6;
+	margin: 0.5rem 0;
+}
+
+/* Ensure custom element fills the viewer grid area */
+.viewer > webvis-viewer {
+	grid-area: 1 / 1;
+	width: 100%;
+	height: 100%;
 }
