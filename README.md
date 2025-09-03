@@ -63,7 +63,7 @@ Note about JSX element typings:
   - The provider: `WebvisGlobalProvider` loads the `webvis.js` script once and exposes the global `webvis` object. Children render only when webvis is ready (or a fallback is shown while loading).
   - Viewer element on Home: The Home page renders `<webvis-viewer context="myContext" viewer="myViewer">` and attaches the `viewerRef` from `useWebvisViewer()` to it. This ref requests the viewer instance from the element and exposes it as `viewer` (e.g., `viewer.getID()`). The hook also offers `removeViewer()` to remove the viewer from its context if needed.
   - AddModelButton: Uses `useWebvisContext()` to obtain the named context (e.g., `"myContext"`) and `useWebvis()` to access enums/constants. On click, it calls `context.add(...)` with initial properties (e.g., `[webvis.Property.ENABLED] = true`) to load the model once and disables itself when the model is already present.
-  - TopologyToggle: Retrieves the same context via `useWebvisContext()` and then waits for the specific viewer using `useWebvisWaitViewer(context, "myViewer")`. With the global constants from `useWebvis()`, it toggles the viewer’s render mode between `webvis.RenderMode.Faces` and `webvis.RenderMode.Topology`.
+  - TopologyToggle: Retrieves the same context via `useWebvisContext()` and then waits for the specific viewer using `useWebvisWaitViewer(context, "myViewer")`. With the global constants from `useWebvis()`, it toggles the viewer’s render mode between `webvis.RenderMode.Faces` and `webvis.RenderMode.FacesTopology`.
   - Additionally available (not used directly on the Home page): `useWebvisCreateViewer` lets you create a viewer on a `<canvas>` programmatically (without the web component).
 
 - Routes and lifecycle

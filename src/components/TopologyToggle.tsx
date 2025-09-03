@@ -48,14 +48,14 @@ export default function TopologyToggle({
 
 		viewer.changeSetting(
 			webvis.ViewerSettingStrings.RENDER_MODE,
-			isOn ? webvis.RenderMode.Faces : webvis.RenderMode.Topology,
+			isOn ? webvis.RenderMode.Faces : webvis.RenderMode.FacesTopology,
 		);
 	}, [
 		viewer,
 		isOn,
 		webvis.ViewerSettingStrings.RENDER_MODE,
 		webvis.RenderMode.Faces,
-		webvis.RenderMode.Topology,
+		webvis.RenderMode.FacesTopology,
 	]);
 
 	// Read the current render mode to set the toggle state
@@ -65,12 +65,12 @@ export default function TopologyToggle({
 		}
 		setIsOn(
 			viewer.readSetting(webvis.ViewerSettingStrings.RENDER_MODE) ===
-				webvis.RenderMode.Topology,
+				webvis.RenderMode.FacesTopology,
 		);
 	}, [
 		viewer,
 		webvis.ViewerSettingStrings.RENDER_MODE,
-		webvis.RenderMode.Topology,
+		webvis.RenderMode.FacesTopology,
 	]);
 
 	return (

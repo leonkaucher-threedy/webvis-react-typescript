@@ -84,9 +84,9 @@ export default function About() {
 				global webvis constants from <CodeSpan>useWebvis()</CodeSpan>, it flips
 				the viewer’s render mode between{" "}
 				<CodeSpan>webvis.RenderMode.Faces</CodeSpan> and
-				<CodeSpan>webvis.RenderMode.Topology</CodeSpan>. This illustrates how a
-				component can react to user input and apply settings to a ready viewer
-				through the hook APIs.
+				<CodeSpan>webvis.RenderMode.FacesTopology</CodeSpan>. This illustrates
+				how a component can react to user input and apply settings to a ready
+				viewer through the hook APIs.
 			</p>
 
 			<h2>Routing and viewer lifecycle</h2>
