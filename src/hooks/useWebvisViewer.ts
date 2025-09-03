@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { useWebvis } from "../components";
 
 /**
  * Interface for the return value of the useWebvisViewer hook
@@ -55,21 +56,23 @@ export function useWebvisWaitViewer(
 ): WebvisWaitViewerHook {
 	const [viewer, setViewer] = useState<webvis.ViewerAPI | undefined>(undefined);
 	const viewerId = id ?? "default_viewer";
+	const webvis = useWebvis();
+
 	useEffect(() => {
 		const potentialViewer = context?.getViewer(viewerId);
 		if (
 			potentialViewer &&
-			potentialViewer?.getState() === 3000 /* webvis.ViewerState.READY */
+			potentialViewer?.getState() === webvis.ViewerState.READY
 		) {
 			// If the viewer is already available, set it immediately
 			setViewer(potentialViewer);
 		} else if (context) {
 			// If the context is available but the viewer is not, wait for the viewer to be created
 			const listenerId = context.registerListener(
-				[109 /* VIEWER_STATE_CHANGED */],
+				[webvis.EventType.VIEWER_STATE_CHANGED],
 				(event: webvis.ViewerStateChangedEvent) => {
 					if (
-						event.state === 3000 /* webvis.ViewerState.READY */ &&
+						event.state === webvis.ViewerState.READY &&
 						event.viewer?.getID() === (id ?? "default_viewer")
 					) {
 						setViewer(event.viewer);
@@ -83,7 +86,7 @@ export function useWebvisWaitViewer(
 				context.unregisterListener(listenerId);
 			};
 		}
-	}, [context, viewerId, id]);
+	}, [context, viewerId, id, webvis]);
 	return viewer;
 }
 
@@ -191,6 +194,8 @@ export function useWebvisCreateViewer(
 	const [canvasElement, setCanvasElement] = useState<HTMLCanvasElement | null>(
 		null,
 	);
+	const webvis = useWebvis();
+
 	// biome-ignore lint: settings is only memoized once
 	const initialSettings = useMemo(() => settings ?? {}, []);
 
@@ -204,10 +209,10 @@ export function useWebvisCreateViewer(
 		if (context && canvasElement) {
 			// Create the viewer on the canvas element
 			const listenerId = context.registerListener(
-				[109 /* VIEWER_STATE_CHANGED */],
+				[webvis.EventType.VIEWER_STATE_CHANGED],
 				(event: webvis.ViewerStateChangedEvent) => {
 					if (
-						event.state === 3000 /* webvis.ViewerState.READY */ &&
+						event.state === webvis.ViewerState.READY &&
 						event.viewer?.getID() === viewerIdMemo
 					) {
 						setViewer(event.viewer);
@@ -221,7 +226,7 @@ export function useWebvisCreateViewer(
 				context.unregisterListener(listenerId);
 			};
 		}
-	}, [context, canvasElement, viewerIdMemo, initialSettings]);
+	}, [context, canvasElement, viewerIdMemo, initialSettings, webvis]);
 
 	return { viewer, viewerRef: callbackRef };
 }
